@@ -16,6 +16,7 @@ class TabBricks {
     }
 
     drawBricks(ctx) {
+
         for(let i=0; i<this.brickColumnCount; i++) {
             for(let j=0; j<this.brickRowCount; j++) {
                 if(this.bricks[i][j].status === 1) {
@@ -24,9 +25,11 @@ class TabBricks {
                     this.bricks[i][j].x = brickX;
                     this.bricks[i][j].y = brickY;
                     this.bricks[i][j].drawBrick(brickX, brickY, ctx);
+                    this.bricks[i][j].writeText(brickX,brickY,ctx);
                 }
             }
         }
+
     }
 
 
