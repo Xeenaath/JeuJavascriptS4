@@ -1,11 +1,10 @@
 let background = new Background("canvas", 1200, 600);
 background.setBackground("img/fond.png");
-let bar = new Bar((background.canvas.width-150)/2, background.canvas.height-10, 175,15);
-let ball = new Ball((background.canvas.width-10)/2, (background.canvas.height-30), 10, 3);
+let bar = new Bar((background.canvas.width-175)/2, background.canvas.height-15, 175,15);
+let ball = new Ball((background.canvas.width-10)/2, (background.canvas.height-30), 10, 1);
 let tabBricks = new TabBricks(4,5);
 
-function draw()
-{
+function draw() {
     background.context.clearRect(0,0, background.canvas.width, background.canvas.height);
 
     bar.drawBar(background.context);
@@ -55,21 +54,22 @@ function keyboard() {
     }
 }
 
+
 function collisionDetection() {
     for(let i=0; i<tabBricks.brickColumnCount; i++) {
         for(let j=0; j<tabBricks.brickRowCount; j++) {
             let brick = tabBricks.bricks[i][j];
             if(brick.status === 1) {
-                if(ball.x > brick.x && ball.x < brick.x + brick.width && ball.y > brick.y && ball.y < brick.y + brick.height) {
+                //si la balle entre en collision avec une brique
+                if((ball.y+ball.radius) > brick.y && (ball.y-ball.radius) < (brick.y+brick.height) &&
+                   (ball.x+ball.radius) > brick.x && (ball.x-ball.radius) < (brick.x+brick.width)) {
                     ball.speedY = -ball.speedY;
-                    brick.status = 0;
+                    brick.status--;
                 }
             }
         }
     }
 }
-
-
 
 
 

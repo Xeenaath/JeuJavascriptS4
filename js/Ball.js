@@ -26,7 +26,7 @@ class Ball {
     changeYdirectionOrNot(canvas, bar) {
         if(this.y + this.speedY < this.radius) {
             this.speedY = -this.speedY;
-        } else if(this.y + this.speedY > canvas.height-bar.height-this.radius) {
+        } else if(this.y + this.speedY > canvas.height-bar.height-ball.radius) {
             if(this.x > bar.x && this.x < bar.x + bar.width) {
                 this.speedY = -this.speedY;
             }
