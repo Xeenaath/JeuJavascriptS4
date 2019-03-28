@@ -1,4 +1,4 @@
-let tabNames = ["C","Java","PHP", "HTML", "CSS", "Python", "Javascript"];
+let tabNames = ["HTML","CSS","PHP", "Javascript", "Java", "Python", "C"];
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));

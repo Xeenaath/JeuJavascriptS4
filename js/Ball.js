@@ -24,18 +24,19 @@ class Ball {
     }
 
     changeYdirectionOrNot(canvas, bar) {
-        if(this.y + this.speedY < this.radius) {
+        if(this.y < this.radius) {
             this.speedY = -this.speedY;
-        } else if(this.y + this.speedY > canvas.height-bar.height-ball.radius) {
-            if(this.x > bar.x && this.x < bar.x + bar.width) {
+        } else if(this.y > canvas.height-bar.height-ball.radius) {
+            if(this.x >= bar.x && this.x <= bar.x + bar.width) {
                 this.speedY = -this.speedY;
             }
         }
     }
 
     changeXdirectionOrNot(canvas) {
-        if(this.x + this.speedX > background.canvas.width-this.radius || this.x +this.speedX < this.radius) {
+        if(this.x + this.speedX > canvas.width-this.radius || this.x +this.speedX < this.radius) {
             this.speedX = -this.speedX;
         }
     }
+
 }

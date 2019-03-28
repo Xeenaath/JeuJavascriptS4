@@ -5,8 +5,8 @@ class TabBricks {
         this.brickRowCount = rows; //4
         this.brickColumnCount = columns; // 10
         this.brickPadding = 30;
-        this.brickOffsetTop = 30;
-        this.brickOffsetLeft = 150;
+        this.brickSetTop = 30;
+        this.brickSetLeft = 150;
         for(let i=0; i< this.brickColumnCount; i++) {
             this.bricks[i] = [];
             for(let j=0; j<this.brickRowCount; j++) {
@@ -20,8 +20,8 @@ class TabBricks {
         for(let i=0; i<this.brickColumnCount; i++) {
             for(let j=0; j<this.brickRowCount; j++) {
                 if(this.bricks[i][j].status === 1) {
-                    let brickX = (i*(this.bricks[i][j].width+this.brickPadding))+this.brickOffsetLeft;
-                    let brickY = (j*(this.bricks[i][j].height+this.brickPadding))+this.brickOffsetTop;
+                    let brickX = (i*(this.bricks[i][j].width+this.brickPadding))+this.brickSetLeft;
+                    let brickY = (j*(this.bricks[i][j].height+this.brickPadding))+this.brickSetTop;
                     this.bricks[i][j].x = brickX;
                     this.bricks[i][j].y = brickY;
                     this.bricks[i][j].drawBrick(brickX, brickY, ctx);
