@@ -1,5 +1,7 @@
 class Game {
+	//contruit une nouvelle partie
     constructor(canvas, ctx, bar, ball, row, column) {
+    	//info est une balise p pour afficher les informations
         this.info = document.getElementById("info");
 
         this.canvas = canvas;
@@ -17,6 +19,7 @@ class Game {
         this.lvl = 1;
     }
 
+	//initialise la partie : place tous les elements et les dessine
     init() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.bar.placer(this.canvas);
@@ -32,8 +35,11 @@ class Game {
         let that = this;
         document.addEventListener("keydown", function espace() {
             if (event.keyCode === 32) that.start();
-            document.removeEventListener("keydown", espace);
-        });
+				else if (event.keyCode === 37 || event.keyCode === 39) {
+					espace();
+				}
+                document.removeEventListener("keydown", espace);
+            });
     }
 
     gererClavier() {
@@ -61,7 +67,8 @@ class Game {
             this.arrowLeftPressed = false;
         }
     }
-
+	
+	//ajoute les eventListener pour les fleches et lance la partie (avec draw)
     start() {
         document.addEventListener("keydown", evt => {
             this.keyDownHandler();
@@ -72,8 +79,11 @@ class Game {
 
         this.draw(true);
     }
-
+	
+	//draw s'appelle elle-même toute les 10ms
     draw(test) {
+    	//la partie se joue seulement si le test est à true.
+    	//le test est à true si le joue n'a ni gagné, ni perdu.
         if (test) {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -93,8 +103,10 @@ class Game {
             }, 10);
 
         } else {
+        	//si le joueur a gagné le niveau, il passe au niveau suivant en appellant init
             if (this.winNiveau()) {
                 this.changeLvl();
+                //Il y a seulement 10 niveaux, le 11ème fait gagner la partie
                 if (this.lvl === 11) {
                     this.info.innerHTML = "Bravo champion ! Vous avez finis tous les niveaux";
                 } else this.init();
@@ -105,16 +117,22 @@ class Game {
                 let that = this;
                 document.addEventListener("keydown", function espace() {
                     if (event.keyCode === 32) that.init();
+					else if (event.keyCode === 37 || event.keyCode === 39) {
+						event.keyCode = 0;
+						espace();
+					}
                     document.removeEventListener("keydown", espace);
                 });
             }
         }
     }
-
+	
+	//teste si le niveau est gagné (donc plus de blocks à détruire)
     winNiveau() {
         return this.tabBricks.allDead();
     }
 
+	//augmente le niveau et donc la difficulté
     changeLvl() {
         this.lvl++;
         if (this.lvl % 2 === 0)
@@ -127,7 +145,8 @@ class Game {
             this.column++;
         }
     }
-
+	
+	//teste si le joueur à perdu
     gameOver() {
         return this.ball.y + this.ball.radius > this.canvas.height;
     }

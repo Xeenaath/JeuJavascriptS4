@@ -1,5 +1,6 @@
 class TabBricks {
-
+	
+	//contruit un tableau de bricks
     constructor(canvas, rows, columns){
         this.brick = [];
         this.rowBricks = rows;
@@ -14,7 +15,8 @@ class TabBricks {
             }
         }
     }
-
+	
+	//dessine le tableau de bricks
     drawBricks(ctx) {
 
         for(let i=0; i<this.columnBricks; i++) {
@@ -29,9 +31,9 @@ class TabBricks {
                 }
             }
         }
-
     }
-
+    
+	//vérifie si toutes les briques sont mortes (pv à 0)
     allDead() {
         for(let i=0; i<this.columnBricks; i++) {
             for (let j = 0; j < this.rowBricks; j++) {

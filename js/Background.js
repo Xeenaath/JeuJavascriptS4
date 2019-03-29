@@ -1,4 +1,5 @@
 class Background {
+	//constructeur qui définit un canvas
     constructor(canvasName, width, height) {
         this.canvas = document.getElementById(canvasName);
         this.canvas.width = width;
@@ -7,7 +8,8 @@ class Background {
         this.context.imageSmoothingEnabled = false;
 
     }
-
+	
+	//mettre un background au canvas
     setBackground(source) {
         this.canvas.style.backgroundImage = "url(" + source + ")";
         this.canvas.style.backgroundRepeat = "no-repeat";
