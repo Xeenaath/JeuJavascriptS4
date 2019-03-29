@@ -4,7 +4,7 @@ class TabBricks {
         this.brick = [];
         this.rowBricks = rows;
         this.columnBricks = columns;
-        this.brickPadding = 30;
+        this.brickPadding = 50;
         this.brickSetTop = 30;
         this.brickSetLeft = ( canvas.width - 130 * columns - this.brickPadding * (columns - 1)) / 2;
         for(let i=0; i< this.columnBricks; i++) {
