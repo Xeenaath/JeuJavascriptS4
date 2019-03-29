@@ -2,7 +2,7 @@ let background = new Background("canvas", 1200, 600);
 background.setBackground("img/fond.png");
 let barWidth = 175;
 let bar = new Bar((background.canvas.width-barWidth)/2, background.canvas.height-15, barWidth,15);
-let speed = 2;
+let speed = 4;
 let ball = new Ball((background.canvas.width-10)/2, (background.canvas.height-30), 10, speed);
 let tabBricks = new TabBricks(4,5);
 
@@ -47,16 +47,14 @@ function keyboard() {
 /******************************************************************************************************/
 
 function collisionDetection() {
-    for(let i=0; i<tabBricks.brickColumnCount; i++) {
-        for(let j=0; j<tabBricks.brickRowCount; j++) {
-            let brick = tabBricks.bricks[i][j];
-            if(brick.status === 1) {
-                //si la balle entre en collision avec une brique
-                if((ball.y+ball.radius) > brick.y && (ball.y-ball.radius) < (brick.y+brick.height) &&
-                   (ball.x+ball.radius) > brick.x && (ball.x-ball.radius) < (brick.x+brick.width)) {
-                    ball.speedY = -ball.speedY;
-                    brick.status--;
-                }
+    for(let i=0; i<tabBricks.columnBricks; i++) {
+        for(let j=0; j<tabBricks.rowBricks; j++) {
+            let brick = tabBricks.brick[i][j];
+            //si la balle entre en collision avec une brique
+            if((ball.y+ball.radius) > brick.y && (ball.y-ball.radius) < (brick.y+brick.height) &&
+               (ball.x+ball.radius) > brick.x && (ball.x-ball.radius) < (brick.x+brick.width)) {
+                ball.speedY = -ball.speedY;
+                brick.status--;
             }
         }
     }
@@ -84,8 +82,7 @@ function draw(test) {
         bar.drawBar(background.context);
 
         ball.drawBall(background.context);
-        ball.changeXdirectionOrNot(background.canvas);
-        ball.changeYdirectionOrNot(background.canvas, bar);
+        ball.changeDirection(background.canvas, bar);
         ball.move();
 
         tabBricks.drawBricks(background.context);

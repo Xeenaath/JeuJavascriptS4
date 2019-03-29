@@ -23,19 +23,29 @@ class Ball {
         this.y += this.speedY;
     }
 
-    changeYdirectionOrNot(canvas, bar) {
-        if(this.y < this.radius) {
+    changeDirection(canvas, bar) {
+        if(this.x > canvas.width - this.radius || this.x < this.radius) {
+            this.speedX = -this.speedX;
+        }
+        if(this.y < this.radius ||
+            (this.y > canvas.height - bar.height - this.radius && this.x >= bar.x && this.x <= bar.x + bar.width)) {
             this.speedY = -this.speedY;
-        } else if(this.y > canvas.height-bar.height-ball.radius) {
-            if(this.x >= bar.x && this.x <= bar.x + bar.width) {
-                this.speedY = -this.speedY;
-            }
         }
     }
 
-    changeXdirectionOrNot(canvas) {
-        if(this.x + this.speedX > canvas.width-this.radius || this.x +this.speedX < this.radius) {
-            this.speedX = -this.speedX;
+    collisionDetection(tabBricks) {
+        for(let i = 0; i < tabBricks.columnBricks; i++) {
+            for(let j = 0; j < tabBricks.rowBricks; j++) {
+                let brick = tabBricks.brick[i][j];
+                if (brick.status > 0) {
+                    //si la balle entre en collision avec une brique
+                    if ((ball.y + ball.radius) > brick.y && (ball.y - ball.radius) < (brick.y + brick.height) &&
+                        (ball.x + ball.radius) > brick.x && (ball.x - ball.radius) < (brick.x + brick.width)) {
+                        ball.speedY = -ball.speedY;
+                        brick.status--;
+                    }
+                }
+            }
         }
     }
 
