@@ -1,10 +1,15 @@
 class Bar {
 
-    constructor(x, y, width, height) {
-        this.x = x;
-        this.y = y;
+    constructor(canvas, width, height) {
+        this.x = 0;
+        this.y = 0;
         this.width = width;
         this.height = height;
+    }
+
+    placer(canvas) {
+        this.x = (canvas.width - this.width) / 2;
+        this.y = canvas.height - this.height - 5;
     }
 
     drawBar(ctx) {
@@ -15,5 +20,11 @@ class Bar {
         ctx.strokeStyle = "black";
         ctx.stroke();
         ctx.closePath();
+    }
+
+    decreaseWidth() {
+        if (this.width > 75) {
+            this.width -= 25;
+        }
     }
 }

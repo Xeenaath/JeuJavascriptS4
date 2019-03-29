@@ -1,11 +1,16 @@
 class Ball {
 
-    constructor(x, y, radius, speed) {
-        this.x = x;
-        this.y = y;
+    constructor(radius, speed) {
+        this.x = 0;
+        this.y = 0;
         this.radius = radius;
         this.speedX = speed;
         this.speedY = speed;
+    }
+
+    placer(canvas, bar) {
+        this.x = canvas.width / 2;
+        this.y = canvas.height - bar.height - this.radius - 15;
     }
 
     drawBall(ctx) {
@@ -34,18 +39,39 @@ class Ball {
     }
 
     collisionDetection(tabBricks) {
+        let isCollision;
+        let distanceHaut, distanceBas, distanceGauche, distanceDroite;
         for(let i = 0; i < tabBricks.columnBricks; i++) {
             for(let j = 0; j < tabBricks.rowBricks; j++) {
                 let brick = tabBricks.brick[i][j];
                 if (brick.status > 0) {
-                    //si la balle entre en collision avec une brique
-                    if ((ball.y + ball.radius) > brick.y && (ball.y - ball.radius) < (brick.y + brick.height) &&
-                        (ball.x + ball.radius) > brick.x && (ball.x - ball.radius) < (brick.x + brick.width)) {
-                        ball.speedY = -ball.speedY;
+
+                    isCollision = (this.y + this.radius) >= brick.y && (this.y - this.radius) <= (brick.y + brick.height) &&
+                                  (this.x + this.radius) >= brick.x && (this.x - this.radius) <= (brick.x + brick.width);
+
+                    distanceHaut = Math.abs( (this.y + this.radius) - brick.y );
+                    distanceBas = Math.abs( (this.y - this.radius) - (brick.y + brick.height) );
+                    distanceGauche = Math.abs( (this.x + this.radius) - brick.x );
+                    distanceDroite = Math.abs( (this.x - this.radius) - (brick.x + brick.width) );
+
+                    if (isCollision) {
+                        if (Math.min(distanceHaut, distanceBas, distanceGauche, distanceDroite) === distanceHaut ||
+                            Math.min(distanceHaut, distanceBas, distanceGauche, distanceDroite) === distanceBas) {
+                            this.speedY = -this.speedY;
+                        } else {
+                            this.speedX = -this.speedX;
+                        }
                         brick.status--;
                     }
                 }
             }
+        }
+    }
+
+    increaseSpeed() {
+        if (Math.abs(this.speedX) < 6) {
+            this.speedX = Math.abs(this.speedX) + 1;
+            this.speedY = Math.abs(this.speedY) + 1;
         }
     }
 

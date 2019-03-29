@@ -1,11 +1,15 @@
 class Game {
-    constructor(canvas, ctx, bar, ball, tabBricks) {
+    constructor(canvas, ctx, bar, ball, row, column) {
+        this.info = document.getElementById("info");
+
         this.canvas = canvas;
         this.ctx = ctx;
 
         this.bar = bar;
         this.ball = ball;
-        this.tabBricks = tabBricks;
+        this.row = row;
+        this.column = column;
+        this.tabBricks = 0;
 
         this.arrowLeftPressed = false;
         this.arrowRightPressed = false;
@@ -14,16 +18,29 @@ class Game {
     }
 
     init() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.bar.placer(this.canvas);
+        this.ball.placer(this.canvas, this.bar);
+        this.tabBricks = new TabBricks(this.canvas, this.row, this.column);
+
         this.bar.drawBar(this.ctx);
         this.ball.drawBall(this.ctx);
         this.tabBricks.drawBricks(this.ctx);
+
+        this.info.innerHTML = "Niveau " + this.lvl;
+
+        let that = this;
+        document.addEventListener("keydown", function espace() {
+            if (event.keyCode === 32) that.start();
+            document.removeEventListener("keydown", espace);
+        });
     }
 
     gererClavier() {
         if(this.arrowRightPressed && this.bar.x < this.canvas.width - this.bar.width) {
-            bar.x += 12;
+            bar.x += 9;
         } else if(this.arrowLeftPressed && bar.x > 0) {
-            bar.x -= 12;
+            bar.x -= 9;
         }
     }
 
@@ -72,29 +89,46 @@ class Game {
 
             let that = this;
             setTimeout(function () {
-                that.draw(!that.gameOver() && !that.win());
+                that.draw(!that.gameOver() && !that.winNiveau());
             }, 10);
 
         } else {
-            if (this.win()) {
+            if (this.winNiveau()) {
                 this.changeLvl();
-                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                this.init();
+                if (this.lvl === 11) {
+                    this.info.innerHTML = "Bravo champion ! Vous avez finis tous les niveaux";
+                } else this.init();
             }
-            if (this.gameOver());
+            if (this.gameOver()) {
+                this.info.innerHTML = "Perdu ! Appuyez sur espace pour recommencer !";
+
+                let that = this;
+                document.addEventListener("keydown", function espace() {
+                    if (event.keyCode === 32) that.init();
+                    document.removeEventListener("keydown", espace);
+                });
+            }
         }
     }
 
-    win() {
+    winNiveau() {
         return this.tabBricks.allDead();
     }
 
     changeLvl() {
         this.lvl++;
+        if (this.lvl % 2 === 0)
+            this.ball.increaseSpeed();
+        else {
+            this.bar.decreaseWidth();
+        }
+        if (this.lvl === 3) {
+            this.row++;
+            this.column++;
+        }
     }
 
     gameOver() {
-
         return this.ball.y + this.ball.radius > this.canvas.height;
     }
 

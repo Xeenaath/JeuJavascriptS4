@@ -7,28 +7,19 @@ let canvas = background.canvas,
 
 //barre
 let widthBar = 175,
-    heightBar = 15,
-    xBar = (canvas.width - widthBar) / 2,
-    yBar = canvas.height - heightBar;
+    heightBar = 15;
 
 //balle
 let radiusBall = 10,
-    speedBall = 4,
-    xBall = canvas.width / 2,
-    yBall = canvas.height - heightBar - radiusBall - 15;
+    speedBall = 4;
 
 //tableau de briques
-let rowBricks = 4,
-    columnBricks = 5;
+let rowBricks = 3,
+    columnBricks = 4;
 
-let bar = new Bar(xBar, yBar, widthBar, heightBar);
-let ball = new Ball(xBall, yBall, radiusBall, speedBall);
-let tabBricks = new TabBricks(rowBricks, columnBricks);
+let bar = new Bar(canvas, widthBar, heightBar);
+let ball = new Ball(radiusBall, speedBall);
 
-let g = new Game(canvas, ctx, bar, ball, tabBricks);
+let g = new Game(canvas, ctx, bar, ball, rowBricks, columnBricks);
 
 g.init();
-
-document.addEventListener("keydown", evt => {
-    if (event.keyCode === 32) g.start();
-});

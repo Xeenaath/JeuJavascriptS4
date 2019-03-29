@@ -1,4 +1,4 @@
-let tabNames = ["HTML", "CSS", "PHP", "Javascript", "Java", "Python", "C"];
+let tabNames = ["HTML", "CSS", "PHP", "PHP", "Javascript", "Javascript", "Java", "Java", "Python", "C", "C"];
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
@@ -28,10 +28,10 @@ class Brick {
         ctx.beginPath();
         ctx.rect(brickX, brickY, this.width, this.height);
 
-        if (this.status === 1) ctx.fillStyle = "#4486f1";
-        if (this.status === 2) ctx.fillStyle = "#5900af";
-        if (this.status === 3) ctx.fillStyle = "#f9004a";
-        if (this.status === 4) ctx.fillStyle = "#fb002c";
+        if (this.status === 1) ctx.fillStyle = "#00a9f1";
+        if (this.status === 2) ctx.fillStyle = "#ffc700";
+        if (this.status === 3) ctx.fillStyle = "#ff8c00";
+        if (this.status === 4) ctx.fillStyle = "#fb4600";
         if (this.status === 5) ctx.fillStyle = "#bb000a";
 
         ctx.fill();

@@ -1,16 +1,16 @@
 class TabBricks {
 
-    constructor(rows, columns){
+    constructor(canvas, rows, columns){
         this.brick = [];
         this.rowBricks = rows;
         this.columnBricks = columns;
         this.brickPadding = 30;
         this.brickSetTop = 30;
-        this.brickSetLeft = 150;
+        this.brickSetLeft = ( canvas.width - 130 * columns - this.brickPadding * (columns - 1)) / 2;
         for(let i=0; i< this.columnBricks; i++) {
             this.brick[i] = [];
             for(let j=0; j<this.rowBricks; j++) {
-                this.brick[i][j] = new Brick(150, 40);
+                this.brick[i][j] = new Brick(130, 40);
             }
         }
     }
